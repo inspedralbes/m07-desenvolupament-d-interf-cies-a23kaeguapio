@@ -22,9 +22,14 @@ describe('Tests E2E de la aplicación', () => {
   });
 
   it('Verifica que la página projectes.html contiene los enlaces a los repositorios de GitHub', () => {
-      cy.visit('http://ejprojectes.dam.inspedralbes.cat/projectes.html');
-      cy.get('a[href*="github.com"]').should('have.length.at.least', 3);
-  });
+    cy.visit('http://ejprojectes.dam.inspedralbes.cat/'); 
+    cy.get('a[href="projectes.html"]').click();
+    cy.url().should('include', 'projectes.html');
+    cy.get('a[href*="github.com"]')
+      .should('have.length.at.least', 3)
+      .should('exist')
+      .should('be.visible');
+});
 
   it('Verifica que al hacer clic en un enlace de GitHub, se abre correctamente', () => {
       cy.visit('https://github.com/a23kaeguapio/');
