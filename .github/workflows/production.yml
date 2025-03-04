@@ -16,13 +16,14 @@ jobs:
           echo "PROD_USER: ${{ secrets.PROD_USER }}"
           echo "PROD_HOST: ${{ secrets.PROD_HOST }}"
 
-      - name: scp a produccio
+      - name: scp a produccio 
         run: |
           echo "${{ secrets.PROD_KEY }}" > ~/prod_key.pem
           chmod 600 ~/prod_key.pem
           cd ${{ github.workspace }}
+          mkdir -p ./web
           echo "Action desplegant a produccio" > ./web/last_deploy.txt
           date >> ./web/last_deploy.txt
-          scp -r -o stricthostkeychecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" ./web/* ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }}:/home/a23kaeguapio/web/ejprojectes.dam.inspedralbes.cat/public_html/
-  
+          scp -r -o stricthostkeychecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" index.html projectes.html ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }}:/home/a23kaeguapio/web/ejprojectes.dam.inspedralbes.cat/public_html/
+
       - run: echo "🍏 This job's status is ${{ job.status }}."
